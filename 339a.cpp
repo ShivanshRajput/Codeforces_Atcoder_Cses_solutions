@@ -1,45 +1,31 @@
 #include<iostream>
+#include<vector>
+#include<algorithm>
 using namespace std;
 
 int main(){
-    string str;
-    cin>>str;
-    int n=str.length();
-    int one=0,two=0,three=0;
-    for (int i=0;i<n;i+=2){
-        if (str[i]=='1'){
-            one++;
+    string s;
+    cin>>s;
+    int n = s.size();
+    vector<int>arr;
+    for(int i=0;i<n;i+=2){
+        if(s[i]=='1'){
+            arr.push_back(1);
             continue;
         }
-        if (str[i]=='2'){
-            two++;
+        if(s[i]=='2'){
+            arr.push_back(2);
             continue;
         }
-        if (str[i]=='3'){
-            three++;
+        if(s[i]=='3'){
+            arr.push_back(3);
             continue;
         }
     }
-    int j=n-1;
-    while(one--){
-        cout<<'1';
-        if (j>0){
-            cout<<'+';
-        }
-        j-=2;
+    sort(arr.begin() , arr.end());
+    for(int i=0;i<arr.size()-1;i++){
+        cout<<arr[i]<<"+";
     }
-    while(two--){
-        cout<<'2';
-        if (j>0){
-            cout<<'+';
-        }
-        j-=2;
-    }
-    while(three--){
-        cout<<'3';
-        if (j>0){
-            cout<<'+';
-        }
-        j-=2;
-    }
+    cout<<arr.back();
+
 }

@@ -1,22 +1,14 @@
 #include<iostream>
+#include<unordered_set>
 using namespace std;
 int main(){
     string str;
     cin>>str;
-    int freq[26]={0};
-    for (int i=0;i<str.length();i++){
-       freq[str[i]-'a']++; 
-    }
-    int ans=0;
-    for (int i=0;i<26;i++){
-        if (freq[i]){
-            ans++;
-        }
-    }
-    if(ans%2){
-        cout<<"IGNORE HIM!\n";
+    unordered_set<char>st(str.begin() , str.end());
+    if(st.size()%2){
+        cout<<"IGNORE HIM!"<<endl;
     }
     else{
-        cout<<"CHAT WITH HER!\n";
-    }
+        cout<<"CHAT WITH HER!"<<endl;
+    }   
 }
