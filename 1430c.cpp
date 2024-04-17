@@ -10,7 +10,7 @@ int main(){
         int a=n;
         for(int i=n-1;i>=1;i--){
             cout<<i<<" "<<a<<endl;
-            a=(i+a+1)/2;
+            a=(i+a+1)/2;  //boht sahi dimag lagaya ceil value nikalne ka .
         }
     }
 }
