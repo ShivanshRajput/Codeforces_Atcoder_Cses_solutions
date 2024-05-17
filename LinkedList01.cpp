@@ -44,5 +44,5 @@ int main(){
         move  = move ->next;
     }
     printLL(head);
-    cout<<lengthOfLL(head);5
+    cout<<lengthOfLL(head);
 }
