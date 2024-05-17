@@ -9,6 +9,7 @@ class Hero {
 };
 
 
+
 int main(){
     Hero ramesh , suresh;
     cout<<"ramesh's size : "<<sizeof(ramesh)<<endl;  // 100 + 4 + 1 = 105 => 108 (due to padding added by compiler)
