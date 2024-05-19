@@ -88,6 +88,14 @@ Node * insertAtKthNode(Node * head , int data , int k){
     return head;
 }
 
+void  insertBeforeNode(Node * curr , int data){
+    Node * newnode = new Node(data);
+    newnode->prev = curr->prev;
+    curr->prev = newnode;
+    newnode->next = curr;
+    newnode->prev->next = newnode;
+}
+
 
 
 int main(){
@@ -103,8 +111,11 @@ int main(){
     // head = insertAtTail(head , 99);
     // head->printList();
     
-    // insert before kth element;
-    head = insertAtKthNode(head , 55 , 3 );
-    head->printList();
+    // // insert before kth element;
+    // head = insertAtKthNode(head , 55 , 3 );
+    // head->printList();
 
+    // insert before node;
+    insertBeforeNode(head->next->next->next , 66);
+    head->printList();
 }
