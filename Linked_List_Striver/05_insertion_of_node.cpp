@@ -44,83 +44,75 @@ Node * arrToLL(vector<int> arr){
     return head;
 }
 
-Node * deleteHeadNode(Node * head){
-    if(head==nullptr) return head; // base case
-    Node * temp = head;
-    head = head -> next;
-    delete temp;
-    return head;
+Node * insertAtHead(Node * head , int data){
+    Node * temp = new Node(data,head);
+    return temp;
 }
 
-Node * deleteTailNode(Node * head){
+Node * insertAtTail(Node * head , int data){
+    if(head == nullptr) return new Node(data);
     Node * move = head;
-    if(move == nullptr || move->next == nullptr) return nullptr;
-    while(move->next->next != nullptr){
-        move = move->next;
+    while(move->next!=nullptr){
+        move=move->next;
     }
-    delete move->next;
-    move->next = nullptr;
+    move->next = new Node(data);
     return head;
 }
 
-Node * deleteKthNode(Node * head , int k){
-    if(k==1)
-        return deleteHeadNode(head);
-    int cnt=0;
+Node * insertAtKthPlace(Node * head , int data , int k){
+    if(k==1){
+        return insertAtHead(head,data);
+    }
+    if(head==nullptr) return nullptr;
     Node * move = head;
-    Node * prev = nullptr;
+    int cnt = 0;
     while(move != nullptr){
         cnt++;
-        if(cnt==k){
-            prev->next = prev->next->next;
-            delete move;
+        if(cnt==k-1){
+            Node * temp = new Node(data,move->next);
+            move->next = temp;
             break;
         }
-        prev = move;
-        move = move->next;
+        move = move ->next;
     }
     return head;
 }
 
-Node * deleteValue(Node * head , int val){
-    if(head == nullptr) return head;
-    if(head->data == val){
-        return deleteHeadNode(head);
+Node * insertAtValue(Node * head , int data , int value){
+    if(head == nullptr) return nullptr;
+    if(head->data==value){
+        return new Node(data , head);
     }
     Node * move = head;
-    Node * prev = nullptr;
-    while(move != nullptr ){
-        if(move->data==val){
-            prev->next = prev->next->next;
-            delete move;
+    while(move->next != nullptr){
+        if(move->next->data == value){
+            Node * temp = new Node(data,move->next);
+            move->next = temp;
             break;
         }
-        prev = move;
         move = move->next;
     }
-  
     return head;
-} 
-
+}
 
 int main(){
     vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8};
     Node * head = arrToLL(arr);
     head->printList();
 
-    // // deleting head node;
-    // head = deleteHeadNode(head);
+    // // insertion at head;
+    // head = insertAtHead(head , 22);
     // head->printList();
 
-    // // deleting tail node;
-    // head = deleteTailNode(head);
+    // //insertion at tail;
+    // head = insertAtTail(head , 55);
     // head->printList();
 
-    // // deleting kth element;
-    // head = deleteKthNode(head,9);
+    // insertion at kth position (i.e. befor kth element)
+    // head = insertAtKthPlace(head , 99 , 5);
     // head->printList();
-    
-    // // deleting element with value val
-    // head = deleteValue(head,9);
-    // head->printList();
+
+    // insert at value;
+    head = insertAtValue(head , 99 , 4);
+    head->printList();
 }
