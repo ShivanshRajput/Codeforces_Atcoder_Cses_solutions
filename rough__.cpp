@@ -1,78 +1,92 @@
-#include <iostream>
-#include <vector>
-#include <numeric>
-#include <iomanip>
+//{ Driver Code Starts
+// Initial Template for C++
 
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> find_bets(int n, const vector<int>& k) {
-    double reciprocal_sum = 0.0;
-    for (int ki : k) {
-        reciprocal_sum += 1.0 / ki;
-    }
+// } Driver Code Ends
+// User function Template for C++
 
-    // If the sum of reciprocals is greater than or equal to 1, no solution exists
-    if (reciprocal_sum >= 1.0) {
-        return {-1};
-    }
-
-    // Otherwise, calculate the bets
-    double B = 1.0;
-    vector<double> b(n);
-    for (int i = 0; i < n; ++i) {
-        b[i] = B / (k[i] * reciprocal_sum);
-    }
-
-    // Ensure the condition k_i * b_i > B is met
-    double total_bets = accumulate(b.begin(), b.end(), 0.0);
-    while (true) {
-        bool condition_met = true;
-        for (int i = 0; i < n; ++i) {
-            if (k[i] * b[i] <= total_bets) {
-                condition_met = false;
-                break;
+class Solution{
+    public:
+    string findOrder(string dict[], int N, int K) {
+        vector<vector<int>>adj(K);
+        vector<int>indegree(K,0);
+        for(int i=0;i<N-1;i++){
+            int j=0;
+            while(dict[i][j]==dict[i+1][j]){
+                j++;
+            }
+            adj[dict[i][j]-'a'].push_back(dict[i+1][j]-'a');
+            indegree[dict[i+1][j]-'a']++;
+        }
+        queue<int>q;
+        for(int i=0;i<K;i++){
+            if(indegree[i]==0){
+                q.push(i);
             }
         }
-        if (condition_met) {
-            break;
+        string ans ="";
+        while(!q.empty()){
+            int node = q.front();
+            for(int &i:adj[node]){
+                indegree[i]--;
+                if(indegree[i]==0){
+                    q.push(i);
+                }
+            }
+            ans = ans + char(node + 'a');
+            q.pop();
         }
-        B *= 10;
-        total_bets *= 10;
-        for (int i = 0; i < n; ++i) {
-            b[i] = B / (k[i] * reciprocal_sum);
-        }
+        
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+string order;
+bool f(string a, string b) {
+    int p1 = 0;
+    int p2 = 0;
+    for (int i = 0; i < min(a.size(), b.size()) and p1 == p2; i++) {
+        p1 = order.find(a[i]);
+        p2 = order.find(b[i]);
+        //	cout<<p1<<" "<<p2<<endl;
     }
 
-    // Convert bets to integer
-    vector<int> int_b(n);
-    for (int i = 0; i < n; ++i) {
-        int_b[i] = static_cast<int>(b[i] + 0.5); // rounding to the nearest integer
-    }
+    if (p1 == p2 and a.size() != b.size()) return a.size() < b.size();
 
-    return int_b;
+    return p1 < p2;
 }
 
+// Driver program to test above functions
 int main() {
-    vector<pair<int, vector<int>>> test_cases = {
-        {3, {3, 2, 7}},
-        {2, {3, 3}},
-        {5, {5, 5, 5, 5, 5}},
-        {6, {7, 9, 3, 17, 9, 13}},
-        {3, {6, 3, 2}},
-        {5, {9, 4, 6, 8, 3}}
-    };
+    int t;
+    cin >> t;
+    while (t--) {
+        int N, K;
+        cin >> N >> K;
+        string dict[N];
+        for (int i = 0; i < N; i++) cin >> dict[i];
+        
+        Solution obj;
+        string ans = obj.findOrder(dict, N, K);
+        order = "";
+        for (int i = 0; i < ans.size(); i++) order += ans[i];
 
-    for (const auto& [n, k] : test_cases) {
-        vector<int> result = find_bets(n, k);
-        if (result.size() == 1 && result[0] == -1) {
-            cout << -1 << endl;
-        } else {
-            for (int bet : result) {
-                cout << bet << " ";
-            }
-            cout << endl;
-        }
+        string temp[N];
+        std::copy(dict, dict + N, temp);
+        sort(temp, temp + N, f);
+
+        bool f = true;
+        for (int i = 0; i < N; i++)
+            if (dict[i] != temp[i]) f = false;
+
+        if(f)cout << 1;
+        else cout << 0;
+        cout << endl;
     }
-
     return 0;
 }
+
+// } Driver Code Ends
