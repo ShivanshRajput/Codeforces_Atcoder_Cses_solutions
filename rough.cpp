@@ -1,71 +1,83 @@
 #include<bits/stdc++.h>
+using namespace std;
+#define int long long
 
-vector<vector<int>> fourSum(vector<int> &nums, int target)
-{
-    int n = nums.size();
-    vector<vector<int>> ans;
-    sort(nums.begin(), nums.end()); // sort array to get sorted ouput
-    for (int i = 0; i < n; i++)
-    {
-        if (i > 0 && nums[i] == nums[i - 1])
-        { // skip iteration if element is same
-            continue;
+
+int minimiseinversion(string s,int n,int k){
+    int count=k;
+    for(int i=0;i<n;i++){
+        if(count==0){
+            break;
         }
-        for (int j = i + 1; j < n; j++)
-        {
+        if(s[i]=='1'){
+            s[i]='0';
+            count--;
+        }
+        
+        
+    }
+    int ans=0;
+    int cot=0;    
+    for(int i=0;i<n;i++){
+        if(s[i]=='0'){
+            ans+=cot;
 
-            if (j > i + 1 && nums[j] == nums[j - 1])
-            { // skip iteration if element is same
-
-                continue;
-            }
-
-            int k = j + 1;
-
-            int l = n - 1;
-
-            while (k < l)
-            {
-                long long sum = nums[i];
-
-                sum += nums[j];
-
-                sum += nums[k];
-
-                sum += nums[l];
-
-                if (sum == target)
-                {
-
-                    vector<int> temp = {nums[i], nums[j], nums[k], nums[l]};
-
-                    ans.push_back(temp);
-
-                    k++;
-
-                    l--;
-
-                    while (k < l && nums[k] == nums[k - 1])
-
-                        k++;
-
-                    while (k < l && nums[l] == nums[l + 1])
-
-                        l--;
-                }
-                else if (sum > target)
-                {
-
-                    l--;
-                }
-                else
-                {
-
-                    k++;
-                }
-            }
+        }
+        else{
+            cot++;
         }
     }
-
     return ans;
+}
+
+int ghaa(string s,int n,int k){
+    int count=k;
+    for(int i=n-1;i>=0;i--){
+        if(count==0){
+            break;
+        }
+        if(s[i]=='0'){
+            s[i]='1';
+            count--;
+        }
+        
+        
+    }
+    int ans=0;
+    int cot=0;    
+    for(int i=0;i<n;i++){
+        if(s[i]=='0'){
+            ans+=cot;
+
+        }
+        else{
+            cot++;
+        }
+    }
+    return ans;
+}
+
+
+
+
+void solve(){
+    int n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    int ans=minimiseinversion(s,n,k);
+    ans=min(ans,ghaa(s,n,k));  
+   
+    cout<<ans<<endl;
+
+    
+}
+
+int32_t main(){
+    int t;
+    cin>>t;
+    while(t--){
+        solve();
+    }
+    return 0;
 }

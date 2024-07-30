@@ -29,7 +29,7 @@ void insertionSort(int arr[] , int n){
     for(int i=1;i<n;i++){
         int j=i;
         int current=arr[j];
-        while(arr[j-1]>current && j>0){
+        while(j>0 && arr[j-1]>current){
             arr[j]=arr[j-1];    //right shift in the values
             j--;
         }
