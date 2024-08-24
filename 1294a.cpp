@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 int main(){
     int t;
@@ -6,15 +6,18 @@ int main(){
     while(t--){
         long long a,b,c,n;
         cin>>a>>b>>c>>n;
-        if((a+b+c+n)%3!=0){
-            cout<<"NO\n";
-            continue;
-        }
-        if(a>(a+b+c+n)/3 or b>(a+b+c+n)/3 or c>(a+b+c+n)/3 ){
+        long long maxi = max({a,b,c});
+        n -= 3*maxi - (a+b+c);
+        if(n<0){
             cout<<"NO\n";
         }
         else{
-            cout<<"YES\n";
+            if(n%3==0){
+                cout<<"YES\n";
+            }
+            else{
+                cout<<"NO\n";
+            }
         }
     }
 }

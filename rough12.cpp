@@ -1,57 +1,33 @@
-#include<bits/stdc++.h>
-#include <cmath>
-#define ll long long
-#define pb push_back
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-
-
-signed main() {
-  
-
-    long long n;
-    cin>> n;
-
-    vector<ll> a(n);
-    vector<ll> b(n);
-    for(int i=0;i<n;i++){
-       cin>>a[i];
+int main() {
+    int N;
+    cin >> N;
+    
+    vector<int> A(N), B(N);
+    
+    for (int i = 0; i < N; ++i) {
+        cin >> A[i];
     }
-    for(int i=0;i<n;i++){
-        cin>>b[i];
+    
+    for (int i = 0; i < N; ++i) {
+        cin >> B[i];
     }
-   
-    vector<pair<ll,ll>> rocks;
-    for(int i=0;i<n;i++){
-        rocks.push_back({a[i]*b[i],i});
-    }
-
-    vector<ll> ansv;
-        stack<pair<ll,ll>> st;
-        
-        for(auto rockss : rocks)
-        {
-            if(rockss.first>0) st.push({rockss.first,rockss.second});
-                     
-            else {                 
-                
-                    while(!st.empty() && st.top().first>0 && st.top().first<abs(rockss.first)) st.pop();
-                
-                    if(st.empty() or st.top().first<0) st.push({rockss.first,rockss.second});  
-                    else if(st.top().first + rockss.first==0) st.pop();   
-                }
-            }       
-        
-        while(!st.empty())
-        {
-            ansv.push_back(st.top().second);
-            st.pop();
+    
+    vector<vector<int>> dp(N + 1, vector<int>(N + 1, 0));
+    
+    for (int i = 1; i <= N; ++i) {
+        for (int j = 1; j <= N; ++j) {
+            if (abs(A[i-1] - B[j-1]) <= 4) {
+                dp[i][j] = dp[i-1][j-1] + 1;
+            } else {
+                dp[i][j] = (dp[i-1][j] > dp[i][j-1]) ? dp[i-1][j] : dp[i][j-1];
+            }
         }
-        for(int i=ansv.size()-1;i>=0;i--){
-            cout<<ansv[i]<<" ";
-        }
-        
-        cout<<endl;
- 
+    }
+    
+    cout << dp[N][N] << endl;
 }

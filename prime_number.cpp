@@ -25,14 +25,15 @@ bool issPrime(int n){
 }
 
 void primefactors(int n){
-    for (int i=2;i<n;i++){
-        if (isPrime(i)){
-            while (n%i==0){
-                cout<<i<<" ";
+    for (int i=2;i*i<n;i++){
+        if(n%i==0){
+            cout<<i<<" ";
+            while(n%i==0){
                 n/=i;
             }
         }
     }
+    if(n!=1) cout<<n<<" ";
 }
 
 int main() {

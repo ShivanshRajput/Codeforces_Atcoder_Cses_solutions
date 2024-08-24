@@ -18,5 +18,5 @@ int letter(string & s){
 int main(){
     string s;
     cin>>s;
-    cout<<letter(s);
+    cout<<s;
 }
