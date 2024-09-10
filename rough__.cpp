@@ -1,14 +1,9 @@
-#include<iostream>
-using namespace std;
+#include<graphics.h>
+#include<conio.h>
 int main(){
-    string s;
-    cin>>s;
-    for(char &c:s){
-        if(c=='0'){
-            cout<<1;
-        }
-        else{
-            cout<<0;
-        }
-    }
+    int gol = DETECT, gm;
+    initgraph(&gol , &gm,"C:\\tc\\bgi");
+    putPixel(100,200,white);
+    closeGraph();
+    getch();
 }
